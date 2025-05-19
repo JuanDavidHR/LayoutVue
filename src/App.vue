@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Vue Argon Dashboard 2 - v4.0.0
-=========================================================
-
-* Product Page: https://creative-tim.com/product/vue-argon-dashboard
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
@@ -19,6 +5,9 @@ import Sidenav from "./examples/Sidenav";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
 const store = useStore();
 const isNavFixed = computed(() => store.state.isNavFixed);
@@ -31,6 +20,27 @@ const showFooter = computed(() => store.state.showFooter);
 const showConfig = computed(() => store.state.showConfig);
 const hideConfigButton = computed(() => store.state.hideConfigButton);
 const toggleConfigurator = () => store.commit("toggleConfigurator");
+
+const usuario = ref(null);
+const router = useRouter();
+
+onMounted(async () => {
+  try {
+    const token = localStorage.getItem('token')
+    if (!token) throw new Error('No hay token')
+
+    const response = await axios.get('http://localhost:3000/api/usuarios/perfil', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    usuario.value = response.data.usuario
+    console.log(response.data);
+    
+  } catch (err) {
+    localStorage.removeItem('token')
+    router.push('/signin')
+  }
+})
 
 const navClasses = computed(() => {
   return {
@@ -56,7 +66,7 @@ const navClasses = computed(() => {
   >
     <!-- nav -->
 
-    <navbar :class="[navClasses]" v-if="showNavbar" />
+    <navbar :class="[navClasses]" v-if="showNavbar" :usuario="usuario" />
 
     <router-view />
 

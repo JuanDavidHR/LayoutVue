@@ -10,6 +10,12 @@ const isRTL = computed(() => store.state.isRTL);
 
 const route = useRoute();
 
+defineProps({
+  usuario: Object
+})
+
+//console.log(usuario)
+
 const currentRouteName = computed(() => {
   return route.name;
 });
@@ -68,9 +74,10 @@ const closeMenu = () => {
               class="px-0 nav-link font-weight-bold text-white"
               target="_blank"
             >
+            
               <i class="fa fa-user" :class="isRTL ? 'ms-sm-2' : 'me-sm-2'"></i>
-              <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none">Sign In</span>
+              <span v-if="usuario" class="d-sm-inline d-none">Hola, {{ usuario.nombre }}</span>
+              <span v-else class="d-sm-inline d-none">Iniciar sesión</span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
