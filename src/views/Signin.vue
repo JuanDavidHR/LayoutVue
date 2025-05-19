@@ -2,17 +2,17 @@
 import { onBeforeUnmount, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router';
 import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import axios from 'axios'
+
 const body = document.getElementsByTagName("body")[0];
 const correo = ref("");
 const password = ref("");
 const router = useRouter();
-
 const loginUsuario = async () => {
   try {
     const response = await axios.post("http://localhost:3000/api/usuarios/login", {
@@ -25,10 +25,10 @@ const loginUsuario = async () => {
     localStorage.setItem("token", token);
     localStorage.setItem("expira", expira);
 
-    // Redirigir a otra vista (dashboard, home, etc.)
-    router.push("/dashboard");
+    // 🔁 Redirigir al dashboard
+    router.push("/dashboard-default");
   } catch (err) {
-    alert("Error al iniciar sesión: " + err.response?.data?.mensaje || err.message);
+    alert("Error: " + (err.response?.data?.mensaje || err.message));
   }
 };
 const store = useStore();

@@ -7,12 +7,12 @@ import RTL from "../views/Rtl.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
-
+import Almacenes from "../views/Almacenes.vue";
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard-default",
+    redirect: "/signin",
   },
   {
     path: "/dashboard-default",
@@ -53,6 +53,11 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/almacenes",
+    name: "Almacenes",
+   component: Almacenes,// o tu ruta real
   },
 ];
 

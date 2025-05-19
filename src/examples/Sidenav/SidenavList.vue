@@ -82,7 +82,17 @@ const getRoute = () => {
           </template>
         </sidenav-item>
       </li>
-
+      <li class="nav-item">
+        <sidenav-item
+          to="/almacenes"
+          :class="getRoute() === 'almacenes' ? 'active' : ''"
+          navText="Almacenes"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-archive-2 text-warning text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
       <li class="mt-3 nav-item">
         <h6
           v-if="isRTL"
